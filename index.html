@@ -7,18 +7,6 @@
     
     <style>
         :root {
-            --bg-color: #030712;
-            --text-color: #ffffff;
-            --accent-color: #f1c40f;
-            --accent-gradient: linear-gradient(135deg, #f1c40f, #d4af37);
-            --card-bg: rgba(10, 17, 36, 0.85);
-            --btn-bg: rgba(15, 23, 42, 0.8);
-            --sparkle-color: #f1c40f;
-            --sparkle-shadow: #d4af37;
-        }
-
-        /* --- 1. مود غيبلي --- */
-        body.ghibli-mode {
             --bg-color: #f2f7f4;
             --text-color: #2c3e35;
             --accent-color: #3b7a57;
@@ -27,6 +15,18 @@
             --btn-bg: rgba(230, 242, 235, 0.9);
             --sparkle-color: #68bb81;
             --sparkle-shadow: #3b7a57;
+        }
+
+        /* --- 1. مود هوغوورتس --- */
+        body.hogwarts-mode {
+            --bg-color: #030712;
+            --text-color: #ffffff;
+            --accent-color: #f1c40f;
+            --accent-gradient: linear-gradient(135deg, #f1c40f, #d4af37);
+            --card-bg: rgba(10, 17, 36, 0.85);
+            --btn-bg: rgba(15, 23, 42, 0.8);
+            --sparkle-color: #f1c40f;
+            --sparkle-shadow: #d4af37;
         }
 
         /* --- 2. مود محطة القطار 9 ¾ --- */
@@ -65,6 +65,18 @@
             --sparkle-shadow: #f59e0b;
         }
 
+        /* --- 5. مود غيبلي (الافتراضي عند الفتح) --- */
+        body.ghibli-mode {
+            --bg-color: #f2f7f4;
+            --text-color: #2c3e35;
+            --accent-color: #3b7a57;
+            --accent-gradient: linear-gradient(135deg, #4ea86d, #3b7a57);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --btn-bg: rgba(230, 242, 235, 0.9);
+            --sparkle-color: #68bb81;
+            --sparkle-shadow: #3b7a57;
+        }
+
         body {
             background-color: var(--bg-color); 
             color: var(--text-color); 
@@ -75,13 +87,14 @@
             min-height: 100vh; 
             overflow-x: hidden; 
             transition: background 0.5s ease, color 0.5s ease;
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🪄</text></svg>"), auto;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🪶</text></svg>"), auto;
         }
 
         body.platform-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🚂</text></svg>"), auto; }
         body.forest-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🍃</text></svg>"), auto; }
-        body.ghibli-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🪶</text></svg>"), auto; }
+        body.hogwarts-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🪄</text></svg>"), auto; }
         body.yellow-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🍯</text></svg>"), auto; }
+        body.ghibli-mode { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24' x='0'>🌿</text></svg>"), auto; }
 
         .celestial-bg {
             position: fixed;
@@ -92,19 +105,19 @@
             pointer-events: none;
             opacity: 0.25; 
             transition: all 0.5s ease;
-            display: none;
+            display: block;
         }
 
-        body:not(.platform-mode):not(.forest-mode) .celestial-bg {
-            display: block;
+        body.platform-mode .celestial-bg, body.forest-mode .celestial-bg {
+            display: none;
         }
 
         .celestial-bg::before { content: "🌙"; }
         body.yellow-mode .celestial-bg::before { content: "☀️"; }
+        body:not(.yellow-mode):not(.platform-mode):not(.forest-mode) .celestial-bg::before { content: "🌙"; }
 
-        .ghibli-watermark { display: none; }
-        body.ghibli-mode .ghibli-watermark {
-            display: block;
+        .ghibli-watermark {
+            display: none;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -112,7 +125,10 @@
             height: 180px;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.85;
+            opacity: 0.9;
+        }
+        body.ghibli-mode .ghibli-watermark {
+            display: block;
         }
 
         .ghibli-trees {
@@ -141,24 +157,134 @@
             box-shadow: inset 0 5px 10px rgba(0,0,0,0.1);
         }
 
+        /* --- تصميم توتورو --- */
         .totoro-container {
             position: absolute;
             bottom: 15px;
-            left: 40px;
-            width: 100px;
-            height: 130px;
+            left: 45px;
+            width: 95px;
+            height: 125px;
             z-index: 1;
         }
-        .totoro-ear-l, .totoro-ear-r { position: absolute; top: 0px; width: 12px; height: 30px; background: #3b7a57; border-radius: 50% 50% 0 0; }
-        .totoro-ear-l { left: 22px; transform: rotate(-10deg); }
-        .totoro-ear-r { right: 22px; transform: rotate(10deg); }
-        .totoro-body-shape { position: absolute; top: 20px; left: 12px; width: 76px; height: 105px; background: #3b7a57; border-radius: 38px 38px 30px 30px; }
-        .totoro-belly { position: absolute; top: 35px; left: 20px; width: 60px; height: 70px; background: #fdfbf7; border-radius: 30px; }
-        .totoro-eye-l, .totoro-eye-r { position: absolute; top: 32px; width: 8px; height: 10px; background: #2c3e35; border-radius: 50%; }
-        .totoro-eye-l { left: 34px; }
-        .totoro-eye-r { right: 34px; }
-        .totoro-nose { position: absolute; top: 38px; left: 46px; width: 6px; height: 4px; background: #2c3e35; border-radius: 50%; }
-        .totoro-marks { position: absolute; top: 48px; left: 30px; width: 40px; height: 35px; background: repeating-linear-gradient(0deg, transparent, transparent 7px, #3b7a57 7px, #3b7a57 9px); opacity: 0.6; }
+        .totoro-ear-l, .totoro-ear-r { 
+            position: absolute; 
+            top: 2px; 
+            width: 11px; 
+            height: 28px; 
+            background: #6e6b6f; 
+            border-radius: 50% 50% 0 0; 
+        }
+        .totoro-ear-l { left: 20px; transform: rotate(-8deg); }
+        .totoro-ear-r { right: 20px; transform: rotate(8deg); }
+        
+        .totoro-body-shape { 
+            position: absolute; 
+            top: 18px; 
+            left: 10px; 
+            width: 75px; 
+            height: 105px; 
+            background: #6e6b6f; 
+            border-radius: 38px 38px 28px 28px; 
+        }
+        
+        .totoro-leaf {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 16px;
+            background: #3b7a57;
+            border-radius: 50% 50% 20% 20%;
+            z-index: 3;
+        }
+        .totoro-leaf::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: #2c3e35;
+            border-radius: 2px;
+        }
+
+        .totoro-belly { 
+            position: absolute; 
+            top: 36px; 
+            left: 17px; 
+            width: 61px; 
+            height: 72px; 
+            background: #dfd3c3; 
+            border-radius: 30px; 
+        }
+        
+        .totoro-eye-l, .totoro-eye-r { 
+            position: absolute; 
+            top: 34px; 
+            width: 9px; 
+            height: 11px; 
+            background: #ffffff; 
+            border: 1.5px solid #2c3e35;
+            border-radius: 50%; 
+        }
+        .totoro-pupil-l, .totoro-pupil-r {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 4px;
+            height: 4px;
+            background: #2c3e35;
+            border-radius: 50%;
+        }
+        .totoro-eye-l { left: 26px; }
+        .totoro-eye-r { right: 26px; }
+        
+        .totoro-nose { 
+            position: absolute; 
+            top: 38px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px; 
+            height: 5px; 
+            background: #2c3e35; 
+            border-radius: 50%; 
+        }
+        
+        .totoro-whiskers-l, .totoro-whiskers-r {
+            position: absolute;
+            top: 43px;
+            width: 22px;
+            height: 14px;
+            background: repeating-linear-gradient(0deg, #2c3e35, #2c3e35 1px, transparent 1px, transparent 6px);
+        }
+        .totoro-whiskers-l { left: -10px; transform: rotate(-5deg); }
+        .totoro-whiskers-r { right: -10px; transform: rotate(5deg); }
+
+        .totoro-marks { 
+            position: absolute; 
+            top: 46px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px; 
+            height: 40px; 
+        }
+        .chevron-mark {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 7px solid #6e6b6f;
+        }
+        .m1 { top: 4px; left: 8px; transform: rotate(180deg); }
+        .m2 { top: 4px; right: 8px; transform: rotate(180deg); }
+        .m3 { top: 16px; left: 2px; transform: rotate(180deg); }
+        .m4 { top: 16px; left: 17px; transform: rotate(180deg); }
+        .m5 { top: 16px; right: 2px; transform: rotate(180deg); }
+        .m6 { top: 28px; left: 9px; transform: rotate(180deg); }
+        .m7 { top: 28px; right: 9px; transform: rotate(180deg); }
 
         .station-watermark { display: none; }
         body.platform-mode .station-watermark {
@@ -257,20 +383,15 @@
         .lock-icon-container.unlocking { animation: spinAndOpen 0.7s forwards; }
         @keyframes spinAndOpen { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(360deg) scale(1.3); } 100% { transform: rotate(360deg) scale(1); } }
 
-        .lock-btn { background: var(--accent-gradient); color: #030712; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; margin-top: 15px; box-shadow: 0 4px 20px var(--sparkle-shadow); z-index: 2; position: relative; transition: all 0.2s ease; }
-        body.ghibli-mode .lock-btn, body.platform-mode .lock-btn, body.forest-mode .lock-btn, body.yellow-mode .lock-btn { color: #ffffff; }
+        .lock-btn { background: var(--accent-gradient); color: #ffffff; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; margin-top: 15px; box-shadow: 0 4px 20px var(--sparkle-shadow); z-index: 2; position: relative; transition: all 0.2s ease; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(3, 7, 18, 0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-box { background-color: #081229; border: 2px solid var(--accent-color); padding: 30px 25px; max-width: 450px; width: 85%; border-radius: 15px; position: relative; box-shadow: 0 0 40px var(--sparkle-shadow); animation: fadeIn 0.4s ease; }
-        body.ghibli-mode .modal-box { background-color: #fcfdfd; border-color: #3b7a57; }
-        body.ghibli-mode .modal-box h3, body.ghibli-mode .modal-box p { color: #2c3e35 !important; }
-        body.yellow-mode .modal-box { background-color: #fffde6; border-color: #f59e0b; }
-        body.yellow-mode .modal-box h3, body.yellow-mode .modal-box p { color: #5c4000 !important; }
+        .modal-box { background-color: #fcfdfd; border: 2px solid var(--accent-color); padding: 30px 25px; max-width: 450px; width: 85%; border-radius: 15px; position: relative; box-shadow: 0 0 40px var(--sparkle-shadow); animation: fadeIn 0.4s ease; }
         
-        .modal-box p { color: #ffffff !important; font-size: 16px; line-height: 1.6; margin: 15px 0 25px 0; }
-        .modal-box .close-space-btn { background: var(--accent-gradient); color: #030712; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 4px 15px var(--sparkle-shadow); transition: transform 0.2s ease, opacity 0.2s ease; }
+        .modal-box p { color: #2c3e35 !important; font-size: 16px; line-height: 1.6; margin: 15px 0 25px 0; }
+        .modal-box h3 { color: #2c3e35 !important; }
+        .modal-box .close-space-btn { background: var(--accent-gradient); color: #ffffff; border: none; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 4px 15px var(--sparkle-shadow); transition: transform 0.2s ease, opacity 0.2s ease; }
         .modal-box .close-space-btn:hover { transform: scale(1.05); opacity: 0.9; }
-        body.ghibli-mode .modal-box .close-space-btn, body.platform-mode .modal-box .close-space-btn, body.forest-mode .modal-box .close-space-btn, body.yellow-mode .modal-box .close-space-btn { color: #ffffff; }
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
@@ -288,13 +409,13 @@
             color: var(--accent-color);
             margin: 20px 0;
             padding: 15px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.05);
             border-radius: 10px;
             border: 1px dashed var(--accent-color);
         }
     </style>
 </head>
-<body>
+<body class="ghibli-mode">
 
     <div class="celestial-bg"></div>
 
@@ -305,11 +426,22 @@
             <div class="totoro-ear-l"></div>
             <div class="totoro-ear-r"></div>
             <div class="totoro-body-shape"></div>
+            <div class="totoro-leaf"></div>
             <div class="totoro-belly"></div>
-            <div class="totoro-eye-l"></div>
-            <div class="totoro-eye-r"></div>
+            <div class="totoro-eye-l"><div class="totoro-pupil-l"></div></div>
+            <div class="totoro-eye-r"><div class="totoro-pupil-r"></div></div>
             <div class="totoro-nose"></div>
-            <div class="totoro-marks"></div>
+            <div class="totoro-whiskers-l"></div>
+            <div class="totoro-whiskers-r"></div>
+            <div class="totoro-marks">
+                <div class="chevron-mark m1"></div>
+                <div class="chevron-mark m2"></div>
+                <div class="chevron-mark m3"></div>
+                <div class="chevron-mark m4"></div>
+                <div class="chevron-mark m5"></div>
+                <div class="chevron-mark m6"></div>
+                <div class="chevron-mark m7"></div>
+            </div>
         </div>
     </div>
 
@@ -320,7 +452,8 @@
         <div class="platform-base"></div>
     </div>
 
-    <button class="theme-toggle-btn" onclick="toggleTheme()">🔮 Switch Mode</button>
+    <!-- الزر يبدأ بكلمة Switch Mode فوق غيبلي فقط -->
+    <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()">✨ Switch Mode</button>
 
     <div class="intro-section">
         <h2>Welcome to your own space 🌕</h2>
@@ -329,7 +462,6 @@
         </p>
     </div>
 
-    <!-- بطاقة العداد التنازلي التفاعلي لـ 14 أوت -->
     <div class="countdown-card">
         <div class="countdown-title" id="countdownTitle">⏳ Counting down to August 14th...</div>
         <div class="countdown-timer-grid">
@@ -381,17 +513,139 @@
 
     <script>
         const moodMessages = {
-            Happy: ["Keep that beautiful smile on! Your happiness literally lights up the whole universe, Malek✨","Le bonheur te va à merveille","Ton sourire peut illuminer une journée","Aujourd'hui est une belle journée pour être heureux","Le bonheur se cache dans les petits détails","You deserve every bit of this happiness"],
-            Sad: ["لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا", "Even broken hearts can bloom again", "Les jours difficiles ne durent pas éternellement","It's okay to feel sad sometimes. Just remember that behind the darkest clouds, there is someone who loves you to the moon and back🌙.I'm always here.🫂✨","Chaque pluie finit par s'arrêter","not everything broken needs fixing somethings are meant to stay as memories 🥀","فَإِنَّ مَعَ الْعُسْرِ يُسْرًا  إِنَّ مَعَ الْعُسْرِ يُسْرًا"], 
-            Bored: ["Try something your future self will thank you for", "Ton aventure commence maintenant","Try practicing the blogging you taught me 🫠", "Laisse ton enthousiasme te guider"],
-            Stressed: ["Pause. Breathe. Continue", "Respire... tout ira bien","Take a deep breath. In... and out. You are doing amazing, don't let anything stress your beautiful mind. 🧘‍♀️🤍", "Slow down, Malek. One step at a time. Everything is going to be fine. ⏳", "Tu fais déjà de ton mieux"],
-            Angry: ["Don't let anger steal your peace", "Chaque tempête finit par passer"," أقوى الناس من يملك نفسه عند الغضب", "What could be causing this anger? Relax, don't live your life with anger and hate in your heart. You'll only be hurting yourself more than the people you hate 🥀", "Le calme est parfois la meilleure réponse"],
-            Anxious: ["أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ", "One step at a time is still progress", "Tu trouveras tu chemin"," حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", "You don't have to carry tomorrow today"," ليس كل ما تخشاه سيحدث", "This feeling is temporary. It will pass","لا تحمل همّ غدٍ لم يأتِ بعد","It's okay not to have all the answers","Respire doucement, tout ira bien","Le bonheur te va à merveille","Tes inquiétudes ne définissent pas qui tu es."," اطمئن، فما كتبه الله لك سيأتيك", "Le calme revient toujours après la tempête","N'oublie pas : chaque jour est un nouveau départ","Même les nuits les plus longues finissent par laisser place au soleil.","Tu n'es pas seul face à ce que tu ressens.","Hey, You are safe here. Everything is going to be perfectly fine, I promise. 🌙✨","Chaque détour t'apprend quelque chose"],
-            Lonely: [" وَهُوَ مَعَكُمْ أَيْنَ مَا كُنْتُمْ","الوحدة أحيانًا بداية لاكتشاف نفسك", "Being alone doesn't mean being forgotten.", "You matter, even when no one says it","You are NEVER alone. Even when I'm not there, you have a permanent place in my heart. 🤍🫂","Tu n'es pas aussi seul que tu le crois","Someone is probably thinking of you right now","If you ever feel lonely, remember this space was built to remind you of me. 🔗","Même les étoiles brillent seules"],
-            Tired: ["Rest today, rise stronger tomorrow","لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ", "You worked hard today. Now it's time to close your eyes, relax under the stars, and rest. 😴🌌","Malek, go to sleep! Your body and mind deserve a good rest tonight. 🛌✨", "Ton esprit mérite هذه paix"],
-            Excited: ["Profite de ce moment, il est à toi"," فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ","L'espoir existe toujours", "Laisse ton enthousiasme ouvrir les portes","Fonce, les meilleures histoires начинают ainsi","Keep that spark alive!"],
-            Calm: ["Le calme est une vraie force", "Même les étoiles brillent seules","Peaceful minds are the most beautiful ones. Enjoy this quiet, beautiful moment under the night sky. 🕊️✨","Protect this inner peace, Malek. It's the most valuable thing. 🤍","A calm heart is a powerful one. Enjoy the stillness. 🌌", "Tu n'es pas aussi seul que tu le crois"],
-            Overwhelmed: ["Not knowing the way doesn't mean you're lost forever"," قد يطول الطريق، لكن الوصول يستحق", "Step back, turn off the noise, and just stay here in our little quiet corner for a while. No pressure at all. 🌊🌙","When everything feels too much, it's okay to completely unplug. 🛑","Disconnect for a while. Hide here until you feel better. 🤍","Tu fais déjà de ton mieux", "Respire... tout ira bien","ابدأ بما تعرف، وسيظهر لك ما لا تعرف"]
+            Happy: [
+                "Keep that beautiful smile on! Your happiness literally lights up the whole universe, Malek✨",
+                "Le bonheur te va à merveille",
+                "Ton sourire peut illuminer une journée",
+                "Aujourd'hui est une belle journée pour être heureux",
+                "Le bonheur se cache dans les petits détails",
+                "You deserve every bit of this happiness",
+                "وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ",
+                "الْعِلْمُ في الصِّغَرِ كالنَّقْشِ في الحَجَرِ، والسرور الحقيقي هو ما يملأ القلب طمأنينة.",
+                "La joie de l'âme est le reflet de sa pureté ✨"
+            ],
+            Sad: [
+                "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا",
+                "Even broken hearts can bloom again",
+                "Les jours difficiles ne durent pas éternellement",
+                "It's okay to feel sad sometimes. Just remember that behind the darkest clouds, there is someone who loves you to the moon and back🌙.I'm always here.🫂✨",
+                "Chaque pluie finit par s'arrêter",
+                "not everything broken needs fixing somethings are meant to stay as memories 🥀",
+                "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا  إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                "مَا أَصَابَ مُسْلِماً نَصَبٌ وَلا وَصَبٌ.. إِلا كَفَّرَ اللَّهُ بِهَا مِنْ خَطَايَاهُ",
+                "عَسَى اللَّهُ أَنْ يَأْتِيَنِي بِهِمْ جَمِيعًا ۖ إِنَّهُ هُوَ الْعَلِيمُ الْحَكِيمُ",
+                "Il n'y a point de nuit qui ne finisse par un lever de soleil 🌅"
+            ], 
+            Bored: [
+                "Try something your future self will thank you for",
+                "Ton aventure commence maintenant",
+                "Try practicing the blogging you taught me 🫠",
+                "Laisse ton enthousiasme te guider",
+                "وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",
+                "الوقت كالسيف إن لم تقطعه قطعك، فاملأ فراغك بما ينفع ويسعد قلبك.",
+                "L'ennui est le désœuvrement de l'esprit en quête de nouveauté 🍃"
+            ],
+            Stressed: [
+                "Pause. Breathe. Continue",
+                "Respire... tout ira bien",
+                "Take a deep breath. In... and out. You are doing amazing, don't let anything stress your beautiful mind. 🧘‍♀️🤍",
+                "Slow down, Malek. One step at a time. Everything is going to be fine. ⏳",
+                "Tu fais déjà de ton mieux",
+                "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                "اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأْتْبِعِ السَّيِّئَةَ الحَسَنَةَ تَمْحُهَا",
+                "فَصَبْرٌ جَمِيلٌ وَاللَّهُ الْمُسْتَعَانُ عَلَى مَا تَصِفُونَ",
+                "Prends le temps de souffler, chaque chose vient à son heure 🕊️"
+            ],
+            Angry: [
+                "Don't let anger steal your peace",
+                "Chaque tempête finit par passer",
+                "أقوى الناس من يملك نفسه عند الغضب",
+                "What could be causing this anger? Relax, don't live your life with anger and hate in your heart. You'll only be hurting yourself more than the people you hate 🥀",
+                "Le calme est parfois la meilleure réponse",
+                "لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الذي يَمْلِكُ نَفْسَهُ عِنْدَ الغَضَبِ",
+                "وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ",
+                "الكلمة الطيبة صدقة، والصمت حكمة وقت الغضب."
+            ],
+            Anxious: [
+                "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                "One step at a time is still progress",
+                "Tu trouveras tu chemin",
+                "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+                "You don't have to carry tomorrow today",
+                "ليس كل ما تخشاه سيحدث",
+                "This feeling is temporary. It will pass",
+                "لا تحمل همّ غدٍ لم يأتِ بعد",
+                "It's okay not to have all the answers",
+                "Respire doucement, tout ira bien",
+                "Le bonheur te va à merveille",
+                "Tes inquiétudes ne définissent pas qui tu es.",
+                "اطمئن، فما كتبه الله لك سيأتيك",
+                "Le calme revient toujours après la tempête",
+                "N'oublie pas : chaque jour est un nouveau départ",
+                "Même les nuits les plus longues finissent par laisser place au soleil.",
+                "Tu n'es pas seul face à ce que tu ressens.",
+                "Hey, You are safe here. Everything is going to be perfectly fine, I promise. 🌙✨",
+                "Chaque détour t'apprend quelque chose",
+                "مَا أَصَابَ مِنْ مُصِيبَةٍ فِي الْأَرْضِ وَلَا فِي أَنْفُسِكُمْ إِلَّا فِي كِتَابٍ مِنْ قَبْلِ أَنْ نَبْرَأَهَا",
+                "لا تدبر الأمر فلك رب يدبر الأمور بحكمة لا تدركها العقول.",
+                "La paix intérieure commence dès l'instant où l'on choisit de ne pas laisser les autres contrôler ses émotions 🌙"
+            ],
+            Lonely: [
+                "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنْتُمْ",
+                "الوحدة أحيانًا بداية لاكتشاف نفسك",
+                "Being alone doesn't mean being forgotten.",
+                "You matter, even when no one says it",
+                "You are NEVER alone. Even when I'm not there, you have a permanent place in my heart. 🤍🫂",
+                "Tu n'es pas aussi seul que tu le crois",
+                "Someone is probably thinking of you right now",
+                "If you ever feel lonely, remember this space was built to remind you of me. 🔗",
+                "Même les étoiles brillent seules",
+                "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا",
+                "الوَحْدَةُ خَيْرٌ مِنْ جَلِيسِ السُّوءِ، وَالجَلِيسُ الصَّالِحُ خَيْرٌ مِنَ الوَحْدَةِ."
+            ],
+            Tired: [
+                "Rest today, rise stronger tomorrow",
+                "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",
+                "You worked hard today. Now it's time to close your eyes, relax under the stars, and rest. 😴🌌",
+                "Malek, go to sleep! Your body and mind deserve a good rest tonight. 🛌✨",
+                "Ton esprit mérite cette paix",
+                "إن لجسدك عليك حقاً، فامنحه ما يستحق من الراحة والسكينة.",
+                "Repose ton esprit fatigué, les étoiles veillent sur tes rêves cette nuit 🌌"
+            ],
+            Excited: [
+                "Profite de ce moment, il est à toi",
+                "فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ",
+                "L'espoir existe toujours",
+                "Laisse ton enthousiasme ouvrir les portes",
+                "Fonce, les meilleures histoires commencent ainsi",
+                "Keep that spark alive!",
+                "إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ",
+                "اسْعَ في أَمْرِكَ ولا تَعْجِزْ، فمن جد وجد.",
+                "L'audace a du génie, de la puissance et de la magie ✨"
+            ],
+            Calm: [
+                "Le calme est une vraie force",
+                "Même les étoiles brillent seules",
+                "Peaceful minds are the most beautiful ones. Enjoy this quiet, beautiful moment under the night sky. 🕊️✨",
+                "Protect this inner peace, Malek. It's the most valuable thing. 🤍",
+                "A calm heart is a powerful one. Enjoy the stillness. 🌌",
+                "Tu n'es pas aussi seul que tu le crois",
+                "وَسَلامٌ عَلَيْهِ يَوْمَ وُلِدَ وَيَوْمَ يَمُوتُ وَيَوْمَ يُبْعَحثُ حَيّاً",
+                "طُوبَى لِمَنْ شَغَلَهُ عَيْبُهُ عَنْ عُيُوبِ النَّاسِ، وُلِزِمَ السُّكُونَ وَالحِكْمَةَ.",
+                "Le silence est l'écrin de la sagesse 🕊️"
+            ],
+            Overwhelmed: [
+                "Not knowing the way doesn't mean you're lost forever",
+                "قد يطول الطريق، لكن الوصول يستحق",
+                "Step back, turn off the noise, and just stay here in our little quiet corner for a while. No pressure at all. 🌊🌙",
+                "When everything feels too much, it's okay to completely unplug. 🛑",
+                "Disconnect for a while. Hide here until you feel better. 🤍",
+                "Tu fais déjà de ton mieux",
+                "Respire... tout ira bien",
+                "ابدأ بما تعرف، وسيظهر لك ما لا تعرف",
+                "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا ما آتَاهَا، سَيَجْعَلُ اللَّهُ بَعْدَ عُسْرٍ يُسْرًا",
+                "خذ من الدنيا ما أتاك، ودع ما عداه لرب العباد."
+            ]
         };
 
         function updateCountdown() {
@@ -423,26 +677,28 @@
 
         function toggleTheme() {
             const body = document.body;
-            const btn = document.querySelector('.theme-toggle-btn');
+            const btn = document.getElementById('themeToggleBtn');
             
-            if (!body.classList.contains('ghibli-mode') && !body.classList.contains('platform-mode') && !body.classList.contains('forest-mode') && !body.classList.contains('yellow-mode')) {
-                body.classList.add('ghibli-mode');
-                btn.innerHTML = "🌱 Ghibli Mode";
-            } else if (body.classList.contains('ghibli-mode')) {
+            if (body.classList.contains('ghibli-mode')) {
                 body.classList.remove('ghibli-mode');
+                body.classList.add('hogwarts-mode');
+                btn.innerText = "🪄 Hogwarts Mode"; 
+            } else if (body.classList.contains('hogwarts-mode')) {
+                body.classList.remove('hogwarts-mode');
                 body.classList.add('platform-mode');
-                btn.innerHTML = "🚂 Platform 9 ¾";
+                btn.innerText = "🚂 Platform 9 ¾";
             } else if (body.classList.contains('platform-mode')) {
                 body.classList.remove('platform-mode');
                 body.classList.add('forest-mode');
-                btn.innerHTML = "🍃 Forest Mode";
+                btn.innerText = "🍃 Forest Mode";
             } else if (body.classList.contains('forest-mode')) {
                 body.classList.remove('forest-mode');
                 body.classList.add('yellow-mode');
-                btn.innerHTML = "☀️ Sunshine Mode";
+                btn.innerText = "☀️ Sunshine Mode";
             } else {
                 body.classList.remove('yellow-mode');
-                btn.innerHTML = "🔮 Hogwarts Mode";
+                body.classList.add('ghibli-mode');
+                btn.innerText = "✨ Switch Mode"; 
             }
         }
 
@@ -482,10 +738,7 @@
                 particle.style.top = '-30px';
                 
                 const body = document.body;
-                if (body.classList.contains('ghibli-mode')) {
-                    particle.innerText = Math.random() > 0.4 ? '🍃' : '🍀';
-                    particle.style.fontSize = (Math.random() * 12 + 14) + 'px';
-                } else if (body.classList.contains('platform-mode')) {
+                if (body.classList.contains('platform-mode')) {
                     particle.innerText = Math.random() > 0.4 ? '🦉' : '✉️';
                     particle.style.fontSize = (Math.random() * 10 + 16) + 'px';
                 } else if (body.classList.contains('forest-mode')) {
@@ -495,10 +748,13 @@
                 } else if (body.classList.contains('yellow-mode')) {
                     particle.innerText = Math.random() > 0.5 ? '🌟' : '☀️';
                     particle.style.fontSize = (Math.random() * 10 + 14) + 'px';
-                } else {
+                } else if (body.classList.contains('hogwarts-mode')) {
                     particle.innerText = Math.random() > 0.5 ? '✨' : '💫';
                     particle.style.color = '#f1c40f';
                     particle.style.fontSize = (Math.random() * 10 + 12) + 'px';
+                } else {
+                    particle.innerText = Math.random() > 0.4 ? '🍃' : '🍀';
+                    particle.style.fontSize = (Math.random() * 12 + 14) + 'px';
                 }
                 
                 particle.style.animationDuration = (Math.random() * 2.5 + 2) + 's';
@@ -561,4 +817,3 @@
     </script>
 </body>
 </html>
-
